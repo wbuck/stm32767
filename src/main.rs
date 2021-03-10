@@ -27,12 +27,12 @@ fn main( ) -> ! {
             .br14( ).clear_bit( )
             .bs14( ).set( ) );
 
-        delay( 5_000_000 );
+        delay( 7_000_000 );
 
         gpiob.bsrr.write( | w | w 
             .br14( ).set_bit( ) );
         
-        delay( 5_000_000 );
+        delay( 7_000_000 );
     }
 }
 
