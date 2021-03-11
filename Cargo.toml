@@ -4,30 +4,52 @@ version = "0.1.0"
 authors = ["wbuck <wbuckley15@hotmail.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
-cortex-m = "0.7.2"
+cortex-m = "0.7"
+cortex-m-rtic = "0.5"
 cortex-m-rt = "0.6"
-panic-halt = "0.2"
-panic-semihosting = "0.5"
+defmt = "0.2"
+defmt-rtt = "0.2"
+panic-probe = { version = "0.2", features = ["print-defmt"] }
 
-[dependencies.stm32f7]
-version = "0.13"
-features = ["stm32f7x7", "rt"]
 
-#[dependencies.stm32f7xx-hal]
-#features = [ "stm32f767", "rt" ]
-#version = "0.2"
+[dependencies.stm32f7xx-hal]
+features = ["stm32f767", "rt"]
+version = "0.2"
+
+[features]
+# set logging levels here
+default = ["defmt-default"]
+defmt-default = []
+defmt-trace = []
+defmt-debug = []
+defmt-info = []
+defmt-warn = []
+defmt-error = []
+
+[[bin]]
+name = "app"
+test = false
+bench = false
+
+[lib]
+test = false
+bench = false
 
 [profile.dev]
-opt-level = 1
-codegen-units = 16
-debug = true
-lto = false
+opt-level = 1            # Basic optimizations.
+codegen-units = 16       # Allow the crate to be split up so that it can be processed in parallel.
+debug = true             # Full debug info.
+lto = false              # Performs "thin" LTO on the local crate only across its codegen units. No LTO is performed if codegen units is 1 or opt-level is 0.
+debug-assertions = true  # Turn cfg(debug_assertions) on.
+overflow-checks = true   # Enable integer overflow checks.
+incremental = false      # Disable incremental compilation.
 
 [profile.release]
-opt-level = "s"     # optimize for size
-codegen-units = 1   # better optimizations
-debug = true        # symbols are nice and they don't increase the size on Flash
-lto = true          # better optimizations
+opt-level = 3            # All optimizations.
+codegen-units = 1        # Prevent the crate from being split up so that better optimizations can be applied.
+debug = true             # Full debug info.
+lto = true               # Performs "fat" LTO which attempts to perform optimizations across all crates within the dependency graph.
+debug-assertions = false # Turn cfg(debug_assertions) off.
+overflow-checks = false  # Disable integer overflow checks.
+incremental = false      # Disable incremental compilation.

@@ -1,17 +1,15 @@
-[target.thumbv7em-none-eabihf]
-runner = "arm-none-eabi-gdb -q -tui -x openocd.gdb"
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+runner = "probe-run --chip STM32F767ZITx"
 rustflags = [
-  # "-C", "link-arg=-Tlink.x",
-  "-C", "linker=lld",
-  # "-Z", "linker-flavor=ld.lld",
-  # "-C", "linker=arm-none-eabi-ld",
-  # "-Z", "linker-flavor=ld",
-  # "-C", "linker=lld",
-  # "-Z", "linker-flavor=ld.lld",
-  # "-C", "linker=arm-none-eabi-ld",
-  # "-Z", "linker-flavor=ld",
-  # "-Z", "thinlto=no",
+  "-C", "linker=flip-link",
+  "-C", "link-arg=-Tlink.x",
+  "-C", "link-arg=-Tdefmt.x"
 ]
 
 [build]
+# Cortex-M7F (with FPU).
 target = "thumbv7em-none-eabihf"
+
+[alias]
+rb = "run --bin"
+rrb = "run --release --bin"

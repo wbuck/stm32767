@@ -2,13 +2,14 @@
 #![no_main]
 #![allow( non_snake_case )]
 
-use panic_semihosting as _;
-use cortex_m::asm::delay;
+use cortex_m::asm;
 use cortex_m_rt::entry;
-use stm32f7::stm32f7x7::{Peripherals, CorePeripherals};
+use stm32f7xx_hal::device::{CorePeripherals, Peripherals};
+use tcp as _;
 
 #[entry]
-fn main( ) -> ! {
+fn main( ) -> ! {    
+    defmt::info!( "Hello, warren!" );
     // Cortex-M peripherals.
     let _core = CorePeripherals::take( ).unwrap( );
 
@@ -27,12 +28,12 @@ fn main( ) -> ! {
             .br14( ).clear_bit( )
             .bs14( ).set( ) );
 
-        delay( 7_000_000 );
+        asm::delay( 10_000_000 );
 
         gpiob.bsrr.write( | w | w 
             .br14( ).set_bit( ) );
         
-        delay( 7_000_000 );
+        asm::delay( 10_000_000 );
     }
 }
 
