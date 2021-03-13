@@ -1,0 +1,7 @@
+[package]
+name = "eth"
+version = "0.1.0"
+authors = ["wbuck <wbuckley15@hotmail.com>"]
+edition = "2018"
+
+[dependencies]

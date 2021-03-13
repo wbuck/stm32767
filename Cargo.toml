@@ -36,6 +36,9 @@ bench = false
 test = false
 bench = false
 
+[workspace]
+members = ["eth"]
+
 [profile.dev]
 opt-level = 1            # Basic optimizations.
 codegen-units = 16       # Allow the crate to be split up so that it can be processed in parallel.

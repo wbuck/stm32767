@@ -32,13 +32,24 @@ const APP: ( ) = {
             .timclk2( 216u32.mhz( ) )
             .freeze( );
 
-        log::info!( "HCLK: {} | SYSCLK: {} | PCLK1: {} | PCLK2: {} | TIMCLK1: {} | TIMCLK2: {}", 
-            clocks.hclk( ).0,
-            clocks.sysclk( ).0,
-            clocks.pclk1( ).0,
-            clocks.pclk2( ).0,
-            clocks.timclk1( ).0,
-            clocks.timclk2( ).0 );
+        // Select the RMII ethernet phy interface. This 
+        // must be set before enabling the peripheral.
+        device.SYSCFG.pmc.modify( | _, w | 
+            w.mii_rmii_sel( ).set_bit( ) );
+
+        
+        /*
+            Pins required for PHY communication:
+            PA1  (AF11) - RMII Reference Clock
+            PA2  (AF11) - RMII MDIO
+            PC1  (AF11) - RMII MDC
+            PA7  (AF11) - RMII RX Data Valid
+            PC4  (AF11) - RMII RXD0
+            PC5  (AF11) - RMII RXD1
+            PG11 (AF11) - RMII TX Enable
+            PG13 (AF11) - RXII TXD0
+            PB13 (AF11) - RMII TXD1
+        */
 
         tcp::exit( );
     }
