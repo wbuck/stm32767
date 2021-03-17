@@ -11,6 +11,7 @@ cortex-m-rt = "0.6"
 defmt = "0.2"
 defmt-rtt = "0.2"
 panic-probe = { version = "0.2", features = ["print-defmt"] }
+eth = { path = "eth" }
 
 
 [dependencies.stm32f7xx-hal]
@@ -36,8 +37,8 @@ bench = false
 test = false
 bench = false
 
-[workspace]
-members = ["eth"]
+#[workspace]
+#members = ["eth"]
 
 [profile.dev]
 opt-level = 1            # Basic optimizations.

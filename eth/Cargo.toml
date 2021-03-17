@@ -5,3 +5,10 @@ authors = ["wbuck <wbuckley15@hotmail.com>"]
 edition = "2018"
 
 [dependencies]
+volatile-register = "0.2"
+aligned = "0.3"
+smoltcp = { version = "0.6", default-features = false, features = ["ethernet", "proto-ipv4"] }
+
+[dependencies.stm32f7xx-hal]
+features = ["stm32f767"]
+version = "0.2"
